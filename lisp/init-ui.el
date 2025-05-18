@@ -1,6 +1,21 @@
 (setq inhibit-startup-screen t)
 (set-frame-font "FiraCode Nerd Font")
 
+;; 更改显示字体大小 16pt
+;; http://stackoverflow.com/questions/294664/how-to-set-the-font-size-in-emacs
+;; (set-face-attribute 'default nil :height 160);;
+
+;;让鼠标滚动更好用
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
+(setq mouse-wheel-progressive-speed nil)
+
+;; Initial frame
+(setq initial-frame-alist '((top . 0.5)
+                            (left . 0.5)
+                            (width . 0.7)
+                            (height . 0.85)
+                            (fullscreen)))
+
 ;; line numbers
 (global-display-line-numbers-mode 1)
 (setq display-line-numbers-type 'relative)
@@ -12,9 +27,6 @@
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package nerd-icons)
-(use-package nerd-icons-dired
-  :hook
-  (dired-mode . nerd-icons-dired-mode))
 
 ;; (load-theme 'wombat)
 (use-package doom-themes
