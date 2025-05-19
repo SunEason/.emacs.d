@@ -1,21 +1,27 @@
 (use-package eglot
-  :hook ((prog-mode . (lambda ()
-  		    (unless (derived-mode-p
-  			    'emacs-lisp-mode 'lisp-mode
-  			    'makefile-mode 'snippet-mode
-  			    'ron-mode)
-  			(eglot-ensure))))
-      ((markdown-mode yaml-mode yaml-ts-mode) . eglot-ensure))
+  :hook 
+  (go-mode . eglot-ensure)
+  (js-mode . eglot-ensure)
   :init
   (setq read-process-output-max (* 1024 1024)) ; 1MB
   (setq eglot-autoshutdown t
       eglot-events-buffer-size 0
-      eglot-send-changes-idle-time 0.5))
+      eglot-send-changes-idle-time 0.1))
 
- (use-package consult-eglot
-   :after consult eglot
-   :bind (:map eglot-mode-map
-          ("C-M-." . consult-eglot-symbols)))
+(use-package consult-eglot
+  :after consult eglot
+  :bind (:map eglot-mode-map
+        ("C-M-." . consult-eglot-symbols)))
+
+(use-package eldoc-box
+  :ensure t
+  ;; 设置 eldoc 显示为弹出框形式
+  :init
+  (eldoc-box-hover-at-point-mode 1)
+  :hook
+  (eglot--managed-mode . eldoc-box-hover-at-point-mode)
+  (eldoc-mode . eldoc-box-hover-at-point-mode))
+
 
 ;;(use-package lsp-mode
 ;;  :ensure t
